@@ -30,7 +30,7 @@ public class JoinServlet extends HttpServlet {
 			}
 		}
 		System.out.println(desc);
-		
+			
 		response.setContentType("text/html; charset=utf-8");
 		response.getWriter().print("OK");
 	}
