@@ -30,6 +30,26 @@
 			<td>마이콜</td>
 		</tr>
 	</table>
-	
+	<img src='/helloweb/images/dooly.png' style="width:400px" />
+	<br/>
+	<img src='images/dooly.png' style="width:400px"/>
+	<br/>
+	<a href="form.jsp">폼으로가기</a><a href="index.jsp">메인으로 가기</a>
+	<p>
+		웹 표준은 월드 와이드 웹의 측면을 서술하고 정의하는 공식 표준이나 다른 기술 규격을 가리키는 
+		일반적인 용어이다.<br/> 
+		최근에 이 용어는 웹 사이트를 작성하는 데 중요도가 높아지고 있으며 웹 디자인, 개발과 관계가 있다.
+	</p>
+	<ul>
+		<li>aaaaa</li>
+		<li>bbbbbb</li>
+		<li>cccccc</li>
+	</ul>
+	<ol>
+		<li>aaaaa</li>
+		<li>bbbbbb</li>
+		<li>cccccc</li>
+	</ol>
+
 </body>
 </html>

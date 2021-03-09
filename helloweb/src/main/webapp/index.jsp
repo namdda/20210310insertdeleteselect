@@ -8,5 +8,8 @@
 </head>
 <body>
 	<h1>Hello World02</h1>
+	<a href="/helloweb/tag.jsp" target='_blank'>태그 연습하기</a>
+	<p>
+	</p>
 </body>
 </html>
