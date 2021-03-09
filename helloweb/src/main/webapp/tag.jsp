@@ -34,7 +34,8 @@
 	<br/>
 	<img src='images/dooly.png' style="width:400px"/>
 	<br/>
-	<a href="form.jsp">폼으로가기</a><a href="index.jsp">메인으로 가기</a>
+	<a href="form.jsp">폼으로가기</a>
+	<a href="index.jsp?no=10">메인으로 가기</a>
 	<p>
 		웹 표준은 월드 와이드 웹의 측면을 서술하고 정의하는 공식 표준이나 다른 기술 규격을 가리키는 
 		일반적인 용어이다.<br/> 
