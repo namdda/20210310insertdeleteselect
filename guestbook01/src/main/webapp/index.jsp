@@ -28,6 +28,7 @@
 	</table>
 	</form>
 	
+	
 	<% 
 		for(GuestbookVo vo : list) { 
 	%>
@@ -37,7 +38,9 @@
 			<td><%=vo.getNo() %></td>
 			<td><%=vo.getName() %></td>
 			<td><%=vo.getRegDate() %></td>
-			<td><a href="/guestbook01/deleteform.jsp?no=<%=vo.getNo()%>">삭제</a></td>
+			<td>
+			<a href="/guestbook01/deleteform.jsp?no=<%=vo.getNo()%>">삭제</a>
+			</td>
 		</tr>
 		<tr>
 			<td colspan=4><%=vo.getContents() %></td>
