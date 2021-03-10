@@ -13,5 +13,5 @@ order by no desc;
 -- delete
   delete
     from emaillist
-   where no = 3; 
+   where no = 5; 
     

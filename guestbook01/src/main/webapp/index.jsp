@@ -1,4 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
+<%@page import="com.bitacademy.guestbook.dao.GuestbookDao"%>
+<%@page import="com.bitacademy.guestbook.vo.GuestbookVo"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+	GuestbookDao dao = new GuestbookDao();
+	List<GuestbookVo> list = dao.findAll();
+%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -12,24 +20,30 @@
 			<td>비밀번호</td><td><input type="password" name="password"></td>
 		</tr>
 		<tr>
-			<td colspan=4><textarea name="message" cols=60 rows=5></textarea></td>
+			<td colspan=4><textarea name="contents" cols=60 rows=5></textarea></td>
 		</tr>
 		<tr>
 			<td colspan=4 align=right><input type="submit" VALUE=" 확인 "></td>
 		</tr>
 	</table>
 	</form>
+	
+	<% 
+		for(GuestbookVo vo : list) { 
+	%>
 	<br>
 	<table width=510 border=1>
 		<tr>
-			<td>[1]</td>
-			<td>안대혁</td>
-			<td>2013-01-15</td>
-			<td><a href="/guestbook01/deleteform.jsp?no=10">삭제</a></td>
+			<td><%=vo.getNo() %></td>
+			<td><%=vo.getName() %></td>
+			<td><%=vo.getRegDate() %></td>
+			<td><a href="/guestbook01/deleteform.jsp?no=<%=vo.getNo()%>">삭제</a></td>
 		</tr>
 		<tr>
-			<td colspan=4>안녕하세요</td>
+			<td colspan=4><%=vo.getContents() %></td>
 		</tr>
 	</table>
+	
+	<% } %>
 </body>
 </html>

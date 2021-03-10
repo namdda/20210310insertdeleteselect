@@ -21,6 +21,11 @@
 	%>
 		<table border="1" cellpadding="5" cellspacing="2">
 			<tr>
+				<td align=right>No: </td>
+				<td><%=vo.getNo() %></td>
+			</tr>
+		
+			<tr>
 				<td align=right>First name: </td>
 				<td><%=vo.getFirstName() %></td>
 			</tr>
