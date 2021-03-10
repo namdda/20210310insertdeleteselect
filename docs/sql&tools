@@ -1,0 +1,17 @@
+SQL
+
+=================================================================================
+DCL
+control [data access = security(보안) = Authentification(인증) + Authorization(권한)
+mysql(CLI) - create database, create user, grant
+
+=================================================================================
+DDL
+create table
+Data Architect = Data Modeling = Scheme Design = ERD 작성 
+ERD Tool(modeling tools) : exERD, ERWin
+
+=================================================================================
+DML
+CRUD  (select), update, delete, insert
+SQL Tools: workbench, toad, orange
