@@ -24,7 +24,10 @@ public class GuestbookServlet extends HttpServlet {
 			String name = request.getParameter("name");
 			String password = request.getParameter("password");
 			String contents = request.getParameter("contents");
-
+			
+			//줄바꿈? 일단 값을 받아온 뒤에, 거기에 \n이 있을테니 받아온 값에 따라 적당히 바꿔치기 해라 라는 뜻
+			contents = contents.replaceAll("\n", "<br/>");
+			
 			GuestbookVo vo = new GuestbookVo();
 			vo.setName(name);
 			vo.setPassword(password);
