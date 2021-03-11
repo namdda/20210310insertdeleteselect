@@ -30,11 +30,14 @@
 	
 	
 	<% 
-		for(GuestbookVo vo : list) { 
+	int count = list.size();
+	int index = 0;
+	for(GuestbookVo vo : list){
 	%>
 	<br>
 	<table width=510 border=1>
 		<tr>
+			<td>[<%=count-index++ %>]</td>
 			<td><%=vo.getNo() %></td>
 			<td><%=vo.getName() %></td>
 			<td><%=vo.getRegDate() %></td>
@@ -43,7 +46,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan=4><%=vo.getContents() %></td>
+				<td colspan=4><%=vo.getContents().replaceAll("\n", "<br/>") %></td>
 		</tr>
 	</table>
 	

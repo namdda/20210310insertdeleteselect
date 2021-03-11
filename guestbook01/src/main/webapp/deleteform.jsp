@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	//no 값을 받아와서 값 <%= << 이거를 쓸 수 있게 해야 한다 
+	//no 값을 받아와서 값(그러니까 표현식) <%= << 이거를 쓸 수 있게 해야 한다 
 	String no = request.getParameter("no");
 %>
 <html>
