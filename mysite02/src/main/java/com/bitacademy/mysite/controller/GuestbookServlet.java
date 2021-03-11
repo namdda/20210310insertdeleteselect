@@ -1,6 +1,8 @@
 package com.bitacademy.mysite.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +34,27 @@ public class GuestbookServlet extends HttpServlet {
 
 			new GuestbookDao().insert(vo);
 			WebUtil.redirect(request.getContextPath() + "/guestbook", request, response);
-		} else {
+		}else if ("deleteform".equals(action)) {
+			WebUtil.forward("/WEB-INF/views/guestbook/deleteform.jsp", request, response); 
+		}
+		else if ("delete".equals(action)) {
+			String no = request.getParameter("no");
+			String password = request.getParameter("password");
+
+			GuestbookVo vo = new GuestbookVo();
+			vo.setNo(Long.parseLong(no));
+			vo.setPassword(password);
+			
+			new GuestbookDao().delete(vo);
+
+			WebUtil.redirect(request.getContextPath() + "/guestbook", request, response);
+		} 
+		else {
+			
+			
+	
+			// forwarding = request dispatch = request extension
+			
 			WebUtil.forward("/WEB-INF/views/guestbook/index.jsp", request, response);
 		}
 	}
