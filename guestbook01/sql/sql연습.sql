@@ -11,7 +11,7 @@ insert
 order by reg_date desc;
 
 -- delete
-delete from guestbook where no = 8 and password='1234';
+delete from guestbook where no = 9 and password='1234';
   
  
  
