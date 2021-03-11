@@ -44,10 +44,10 @@ public class GuestbookDao {
 			conn = getConnection();
 			
 			//3. SQL 준비
-			// date_format을 사용하고 싶다면 vo의 Regdate 타입을 처음부터 String 으로 받으면 문제가 없다. 
+			// date format을 사용하고 싶다면 vo의 Regdate 타입을 처음부터 String 으로 받으면 문제가 없다. 
 			// 기본 Date를 사용하고 싶다면 1. 우선 import 은 util.date가 아닌 sql.date로 할 것. 
 			// 원래는 이걸 사용 해야 하는걸로 알고 있는데, 우선은 이걸로 하기로 했다. (https://yuja-kong.tistory.com/26)
-			String sql = "select no, name, date_format(reg_date, '%Y-%m-%d  %H: %i:%s') as reg_date, contents" +
+			String sql = "select no, name, date_format(reg_date, '%Y-%m-%d  %H: %i:%s'), contents" +
 					" from guestbook" +
 					" order by no desc";
 			pstmt = conn.prepareStatement(sql);

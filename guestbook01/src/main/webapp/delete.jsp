@@ -9,7 +9,7 @@ vo.setNo(Long.parseLong(no));
 vo.setPassword(password);
 
 GuestbookDao dao = new GuestbookDao();
-dao.delete(no, password);
+dao.delete(vo);
 
 //redirect는 request 값을 유지하지 않는다고 한다 
 
