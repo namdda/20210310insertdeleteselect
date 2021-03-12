@@ -7,8 +7,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	GuestbookDao dao = new GuestbookDao();
-	List<GuestbookVo> list = dao.findAll();
+	pageContext.setAttribute("newline", "\n");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -20,7 +20,7 @@
 </head>
 <body>
 	<div id="container">
-		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
+		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="guestbook">
 				<form action="${pageContext.request.contextPath}/guestbook"
@@ -42,32 +42,28 @@
 					</table>
 				</form>
 				<ul>
+				<c:set var="count" value="${fn:length(list)}" /> 
+				<c:forEach items="${list }" var="vo" varStatus="status">
 					<li>
-						<% 
-							int count = list.size();
-							int index = 0;
-							for(GuestbookVo vo : list){
-						%>
-						<table>
-							<tr>
-								<td>[<%=count-index++ %>]</td>
-								<td><%=vo.getName() %></td>
-								<td><%=vo.getRegDate() %></td>
-								<td><a href="${pageContext.request.contextPath}/guestbook?a=deleteform&no=<%=vo.getNo()%>">삭제</a></td>
-							</tr>
-							<tr>
-								<td colspan=4>
-								<%=vo.getContents() %>
-								</td>
-							</tr>
-						</table> <br>
-						<% } %>
-					</li>
+							<table>
+								<tr>
+									<td>[${count-status.index }]</td>
+									<td>${vo.name }</td>
+									<td>${vo.regDate }</td>
+									<td><a
+										href="${pageContext.request.contextPath}/guestbook?a=deleteform&no=${vo.no}">삭제</a></td>
+								</tr>
+								<tr>
+									<td colspan=4>${fn:replace(vo.contents,newline, "<br>")}</td>
+								</tr>
+							</table>
+							<br>
+						</c:forEach></li>
 				</ul>
 			</div>
 		</div>
-		<jsp:include page="/WEB-INF/views/includes/navigation.jsp" />
-		<jsp:include page="/WEB-INF/views/includes/footer.jsp" />
+		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
+		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>
 </body>
 </html>

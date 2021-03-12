@@ -16,7 +16,6 @@ public class GuestbookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
 		
 		String action = request.getParameter("a");
 		
@@ -25,7 +24,7 @@ public class GuestbookServlet extends HttpServlet {
 			String password = request.getParameter("password");
 			String contents = request.getParameter("contents");
 
-			contents = contents.replaceAll("\n", "<br/>");
+			//contents = contents.replaceAll("\n", "<br/>");
 			
 			GuestbookVo vo = new GuestbookVo();
 			vo.setName(name);
@@ -46,12 +45,14 @@ public class GuestbookServlet extends HttpServlet {
 			vo.setPassword(password);
 			
 			new GuestbookDao().delete(vo);
-
+			
 			WebUtil.redirect(request.getContextPath() + "/guestbook", request, response);
 		} 
 		else {
 			
-			
+
+			List<GuestbookVo> list = new GuestbookDao().findAll();
+			request.setAttribute("list", list);
 	
 			// forwarding = request dispatch = request extension
 			
