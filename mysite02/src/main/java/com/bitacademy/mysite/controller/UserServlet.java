@@ -6,10 +6,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.bitacademy.mysite.dao.UserDao;
 import com.bitacademy.mysite.vo.UserVo;
 import com.bitacademy.web.mvc.WebUtil;
+import com.mysql.cj.Session;
 
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -39,29 +41,58 @@ public class UserServlet extends HttpServlet {
 			new UserDao().insert(userVo);
 
 			WebUtil.redirect(request.getContextPath() + "/user?a=joinsuccess", request, response);
-		} else if("loginform".equals(action)) {
+		} else if ("loginform".equals(action)) {
 			WebUtil.forward("/WEB-INF/views/user/loginform.jsp", request, response);
-		} else if("login".equals(action)) {
+		} else if ("login".equals(action)) {
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
-			
+
 			UserVo vo = new UserVo();
 			vo.setEmail(email);
 			vo.setPassword(password);
-			
+
 			UserVo authUser = new UserDao().findByEmailAndPassword(vo);
-			if(authUser == null) {
+			if (authUser == null) {
 				request.setAttribute("authResult", "fail");
 				WebUtil.forward("/WEB-INF/views/user/loginform.jsp", request, response);
-				return;	
-			} 			
-			
+				return;
+			}
+
 			// 인증 처리
+			HttpSession session = request.getSession(true);
+			session.setAttribute("authUser", authUser);
+
+			// 응답
+			WebUtil.redirect(request.getContextPath(), request, response);
+
+		}
+
+		else if ("logout".equals(action)) {
+			HttpSession session = request.getSession();
+
+			if (session == null) {
+				WebUtil.redirect(request.getContextPath(), request, response);
+			}
+
+			UserVo authUser = (UserVo) session.getAttribute("authUser");
+			if (authUser == null) {
+				WebUtil.redirect(request.getContextPath(), request, response);
+				return;
+			}
+
+			// 로그아웃 처리
+
+			if (session != null && session.getAttribute("authUser") != null) {
+				session.removeAttribute("authUser");
+				session.invalidate();
+			}
 			
-			
+			WebUtil.redirect(request.getContextPath(), request, response);
 		} else {
 			WebUtil.redirect(request.getContextPath(), request, response);
+			return;
 		}
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
