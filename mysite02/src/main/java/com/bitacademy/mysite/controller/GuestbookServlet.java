@@ -43,6 +43,9 @@ public class GuestbookServlet extends HttpServlet {
 			GuestbookVo vo = new GuestbookVo();
 			vo.setNo(Long.parseLong(no));
 			vo.setPassword(password);
+				
+			
+			System.out.println("no의 값 : " + vo.getNo());
 			
 			new GuestbookDao().delete(vo);
 			
