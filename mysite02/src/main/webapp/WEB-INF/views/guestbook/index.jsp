@@ -43,7 +43,7 @@
 				</form>
 				<ul>
 				<c:set var="count" value="${fn:length(list)}" /> 
-				<c:forEach items="${list }" var="vo" varStatus="status">
+				<c:forEach items="${list}" var="vo" varStatus="status">
 					<li>
 							<table>
 								<tr>
@@ -58,7 +58,8 @@
 								</tr>
 							</table>
 							<br>
-						</c:forEach></li>
+							</li>
+						</c:forEach>
 				</ul>
 			</div>
 		</div>

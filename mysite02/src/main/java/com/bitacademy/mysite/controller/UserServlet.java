@@ -26,27 +26,36 @@ public class UserServlet extends HttpServlet {
 			WebUtil.forward("/WEB-INF/views/user/joinsuccess.jsp", request, response);
 		} else if("loginform".equals(action)) {
 			WebUtil.forward("/WEB-INF/views/user/loginform.jsp", request, response);
-		} else if("updateform".equals(action)) {
-			// Access Control (접근 제어)
+		} 
+		
+		
+		else if("updateform".equals(action)) {
+			// Access control (접근 제어)
 			HttpSession session = request.getSession();
-			if(session == null) {
+			if(session == null){
 				WebUtil.redirect(request.getContextPath(), request, response);
-				return;	
+				return;
 			}
 			
 			UserVo authUser = (UserVo)session.getAttribute("authUser");
-			if(authUser == null ) {
+			if(authUser == null) {
 				WebUtil.redirect(request.getContextPath(), request, response);
-				return;	
+				return;				
 			}
 			
 			Long no = authUser.getNo();
-			//UserVo userVo = new UserDao().findByNo(no);
-			UserVo userVo = new UserVo();
+			UserVo userVo = new UserDao().findByNo(no);
 			
-			request.setAttribute("userVo", userVo);
+			request.setAttribute("userVo", userVo);			
 			WebUtil.forward("/WEB-INF/views/user/updateform.jsp", request, response);
-		} else if("logout".equals(action)) {
+		}
+		
+		
+		
+		
+		
+		
+		else if("logout".equals(action)) {
 			HttpSession session = request.getSession();
 			
 			// 로그아웃 처리
@@ -94,7 +103,47 @@ public class UserServlet extends HttpServlet {
 			new UserDao().insert(userVo);
 			
 			WebUtil.redirect(request.getContextPath() + "/user?a=joinsuccess", request, response);
-		} else {
+		} 
+		
+		
+		else if("update".equals(action)) {
+			// Access control (접근 제어)
+			HttpSession session = request.getSession();
+			if(session == null){
+				WebUtil.redirect(request.getContextPath(), request, response);
+				return;
+			}
+			
+			UserVo authUser = (UserVo)session.getAttribute("authUser");
+			if(authUser == null) {
+				WebUtil.redirect(request.getContextPath(), request, response);
+				return;				
+			}
+			Long no = Long.parseLong(request.getParameter("no"));			
+			String name = request.getParameter("name");			
+			String email = request.getParameter("email");			
+			String password = request.getParameter("password");		
+			String gender = request.getParameter("gender");		
+			
+						
+			UserVo userVo = new UserDao().findByNo(no);
+			userVo.setName(name);
+			userVo.setEmail(email);
+			userVo.setPassword(password);
+			userVo.setGender(gender);
+			
+			if(new UserDao().update(userVo)) {
+				UserVo authEditedUser = new UserVo();
+				authEditedUser.setNo(no);
+				authEditedUser.setName(name);
+				session.setAttribute("authUser",authEditedUser);
+			}
+
+			WebUtil.redirect(request.getContextPath(), request, response);			
+		}
+		
+		
+		else {
 			WebUtil.redirect(request.getContextPath(), request, response);
 		}
 	}

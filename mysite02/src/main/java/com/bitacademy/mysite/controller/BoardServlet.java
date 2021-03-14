@@ -15,7 +15,9 @@ public class BoardServlet extends HttpServlet {
 		String action = request.getParameter("a");
 		if("writeform".equals(action)) {
 			
-		} else {
+		} 
+		
+		else {
 			WebUtil.forward("/WEB-INF/views/board/index.jsp", request, response);
 		}
 	}
