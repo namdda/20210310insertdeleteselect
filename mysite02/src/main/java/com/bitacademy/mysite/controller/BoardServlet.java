@@ -98,8 +98,8 @@ public class BoardServlet extends HttpServlet {
 					//내 멋대로 페이징 
 					
 					int nowPage = 1;
-					int pageLimit = 3;
-					int pageNumLimit = 4;
+					int pageLimit = 5;
+					int pageNumLimit = 5;
 					/*
 					if(request.getParameter("nowPage")!=null)
 						nowPage = Integer.parseInt(request.getParameter("nowPage"));

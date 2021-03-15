@@ -327,7 +327,7 @@ public class BoardDao {
 			conn = getConnection();
 			String sql = "select * from "
 					+ 			"(select rownum rnum, t1.* from "
-					+ 						"(select * from board order by group_id desc, order_no)"
+					+ 						"(select * from board order by group_no desc, order_no)"
 					+ "			 t1) where rnum >= ? and rnum <= ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, start);
@@ -384,7 +384,7 @@ public class BoardDao {
 		try {
 			System.out.println("검색한 단어:" + word);
 			String sql = "select b.no, b.user_no, b.title, b.group_no, b.order_no, b.depth, date_format(b.reg_date,'%Y-%m-%d %H:%i:%s') as regdate, cnt, u.name"
-					+ "from board b" + "join user u " + "on b.user_no = u.no" + "where d_kind like ?"
+					+ "from board b" + "join user u " + "on b.user_no = u.no" + "where title like ?"
 					+ "order by group_no DESC, order_no ASC ";
 
 			pstmt = conn.prepareStatement(sql);
