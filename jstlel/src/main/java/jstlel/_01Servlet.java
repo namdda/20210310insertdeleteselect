@@ -23,7 +23,7 @@ public class _01Servlet extends HttpServlet {
 		// 객체 테스트
 		UserVo userVo = new UserVo();
 		userVo.setNo(10L);
-		userVo.setName("안대혁");
+		userVo.setName("홍길동");
 		
 		Object obj = null;
 		

@@ -21,8 +21,8 @@ public class BoardDao {
 		try {
 			conn = getConnection();
 
-			sql = "insert into board(user_no, title, group_no, order_no, " + " depth, contents, reg_date) "
-					+ "	values(?, ?, ifnull((select max(group_no)+1 from board b),1), 1, " + " 0, ?, now());";
+			sql = "insert into board(user_no, title, group_no, order_no, depth, contents, reg_date) "
+					+ "	values(?, ?, ifnull((select max(group_no)+1 from board b),1), 1, 0, ?, now());";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, vo.getUserNo());
 			pstmt.setString(2, vo.getTitle());
@@ -97,7 +97,71 @@ public class BoardDao {
 		return result;
 	}
 
-	// index 쪽
+	
+	public boolean replyInsert(BoardVo vo) {
+		boolean result = false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConnection();
+			String sql = "insert"	+ 
+					"	into board (no, title, contents, user_no, count, reg_date, group_no, order_no, depth) "	+
+					"   values (null, ?, ?,?, 0, now(), ?, ? , ?);";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getTitle());
+			pstmt.setString(2, vo.getContents());
+			pstmt.setLong(3,  vo.getUserNo());
+			pstmt.setLong(4, vo.getGroupNo());
+			pstmt.setLong(5,  vo.getOrderNo());
+			pstmt.setLong(6, vo.getDepth());
+			int count = pstmt.executeUpdate();
+			result = count == 1;
+
+		} catch (SQLException e) {
+			System.out.println("error-"+e);
+		} finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+	
+	
+	public boolean updateOrderNo(Long groupNo, Long orderNo, Long no) {
+		boolean result = false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "";
+		try {
+			conn = getConnection();
+			sql = "update board set order_no= order_no+1 where group_no = ? and order_no > ? and no > 0;";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, groupNo);
+			pstmt.setLong(2, orderNo);
+			int count = pstmt.executeUpdate();
+			result = count >= 1;
+
+		} catch (SQLException e) {
+			System.out.println("error-"+e);
+		} finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+	
+	
 	public List<BoardVo> selectAll() {
 		List<BoardVo> list = new ArrayList<BoardVo>();
 		Connection conn = null;
@@ -318,6 +382,7 @@ public class BoardDao {
 		return res;
 	}
 
+	/*
 	public ArrayList<BoardVo> list(int start, int end) {
 		ArrayList<BoardVo> res = new ArrayList<BoardVo>();
 		Connection conn = null;
@@ -374,6 +439,51 @@ public class BoardDao {
 		return res;
 	}
 
+	*/
+	
+	public List<BoardVo> paging(int curpage, int shownum){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		ResultSet result = null;
+		List<BoardVo> list = new ArrayList<BoardVo>();
+
+		try {
+			conn = getConnection();
+
+			String sql = "select no, title, user_no, count, reg_date "+
+					" from board order by no desc limit ?, ?;";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (curpage - 1)*shownum);
+			pstmt.setInt(2, shownum);
+			result = pstmt.executeQuery();
+
+			while(result.next()) {
+				BoardVo vo = new BoardVo();
+				vo.setNo(result.getLong(1));
+				vo.setTitle(result.getString(2));
+				vo.setUserNo(result.getLong(3));
+				vo.setCnt(result.getLong(4));
+				vo.setRegDate(result.getString(5));
+
+				list.add(vo);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("error-"+e);
+		} finally {
+			try {
+				if(pstmt!=null)	pstmt.close();
+				if(conn!=null) conn.close();
+				if(result!=null) result.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	
+	
 	// 제목으로 검색
 	/*
 	public ArrayList<BoardVo> search(String word) {

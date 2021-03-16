@@ -25,6 +25,7 @@
 				<table class="tbl-ex">
 					<tr>
 						<th>번호</th>
+						<th>글번호</th>
 						<th>제목</th>
 						<th>글쓴이</th>
 						<th>조회수</th>
@@ -35,15 +36,19 @@
 					<c:forEach items="${list}" var="vo" varStatus="status">
 						<tr>
 							<td>${count - status.index}</td>
-							<td style="text-align:Left; padding-left:${(vo.depth-1)*40}">
-								<a
+							<td>${vo.no}</td>
+
+
+							<%-- <td style="text-align:Left; padding-left:${(vo.depth-1)*40}">  --%>
+							<td style="text-align: Left;"><c:if test="${vo.depth>0}">
+									<c:forEach begin="1" end="${vo.depth}" step="1">
+									 &nbsp;
+								 </c:forEach>
+									<img
+										src="${pageContext.request.contextPath}/assets/images/reply.png">
+								</c:if> <a
 								href="${pageContext.request.contextPath}/board?a=view&no=${vo.no}">
-									<c:if test="${vo.depth > 0 }">
-										<img
-											src="${pageContext.request.contextPath}/assets/images/reply.png">
-									</c:if> ${vo.title}
-							</a>
-							</td>
+									${vo.title} </a></td>
 							<td>${vo.userName }</td>
 							<td>${vo.cnt }</td>
 							<td>${vo.regDate }</td>
@@ -52,7 +57,7 @@
 										href="${pageContext.request.contextPath}/board?a=delete&no=${vo.no}"
 										class="del">삭제</a>
 								</c:if></td>
-							<!-- 						</tr>	 -->
+						</tr>
 					</c:forEach>
 				</table>
 
@@ -85,8 +90,8 @@
 						<li>5</li>
 						<li><a href="">▶</a></li>
 					</ul>
-				
-				 
+
+
 				</div>
 				<!-- pager 추가 -->
 				<c:if test="${not empty authUser}">
