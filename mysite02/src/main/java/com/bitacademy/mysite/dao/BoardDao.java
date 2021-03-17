@@ -176,8 +176,8 @@ public class BoardDao {
 			pstmt.close();
 
 			sql = "select b.no, b.user_no, b.title, b.group_no, b.order_no, b.depth, "
-					+ " date_format(b.reg_date,'%Y-%m-%d %H:%i:%s') as reg_date, cnt, u.name " + "	from board b "
-					+ " join user u " + " on b.user_no = u.no " + "	order by group_no DESC, order_no ASC;";
+					+ " date_format(b.reg_date,'%Y-%m-%d %H:%i:%s') as reg_date, cnt, u.name from board b "
+					+ " join user u on b.user_no = u.no order by group_no DESC, order_no;";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -256,7 +256,7 @@ public class BoardDao {
 		try {
 			conn = getConnection();
 
-			sql = "update board " + "	set cnt = cnt + 1" + " where no = ?;";
+			sql = "update board set cnt = cnt + 1 where no = ?;";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, no);
 
@@ -286,10 +286,15 @@ public class BoardDao {
 		BoardVo vo = null;
 		try {
 			conn = getConnection();
+			
+			sql = "set sql_safe_updates=0;";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.executeQuery();
+			pstmt.close();
 
 			sql = " select b.no, b.user_no, b.title, b.group_no, b.order_no, "
 					+ " b.depth, b.contents, date_format(b.reg_date,'%Y-%m-%d %H:%i:%s') as reg_date, cnt "
-					+ "	from board b " + " join user u on b.no = ? and b.user_no = u.no;";
+					+ "	from board b join user u on b.no = ? and b.user_no = u.no;";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, no);
@@ -382,47 +387,48 @@ public class BoardDao {
 		return res;
 	}
 
-	/*
-	public ArrayList<BoardVo> list(int start, int end) {
-		ArrayList<BoardVo> res = new ArrayList<BoardVo>();
+	
+	
+	
+	
+	//mysql limit은 그거다 그거 ?는 n+1번째부터 n개 가져온다는 뜻이다. 
+	public List<BoardVo> list(int start, int pageLimit) {
+		
+		List<BoardVo> list = new ArrayList<BoardVo>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+		String sql = null;
+		
 		try {
 			conn = getConnection();
-			String sql = "select * from "
-					+ 			"(select rownum rnum, t1.* from "
-					+ 						"(select * from board order by group_no desc, order_no)"
-					+ "			 t1) where rnum >= ? and rnum <= ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
-			rs = pstmt.executeQuery();
+			
+			sql = "select b.no, b.user_no, b.title, b.group_no, b.order_no, b.depth, "
+					+ " date_format(b.reg_date,'%Y-%m-%d %H:%i:%s') as reg_date, cnt, u.name from board b "
+					+ " join user u on b.user_no = u.no order by group_no DESC, order_no asc limit ? ,?;";
 
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, start-1);
+			pstmt.setInt(2, pageLimit);
+
+			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				BoardVo vo = new BoardVo();
-
 				vo.setNo(rs.getLong(1));
 				vo.setUserNo(rs.getLong(2));
 				vo.setTitle(rs.getString(3));
 				vo.setGroupNo(rs.getLong(4));
 				vo.setOrderNo(rs.getLong(5));
 				vo.setDepth(rs.getLong(6));
-				vo.setContents(rs.getString(7));
-				vo.setRegDate(rs.getString(8));
+				vo.setRegDate(rs.getString(7));
+				vo.setCnt(rs.getLong(8));
 				vo.setUserName(rs.getString(9));
-
-				res.add(vo);
+				list.add(vo);
 			}
 
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (rs != null) {
-					rs.close();
-				}
 				if (conn != null) {
 					conn.close();
 				}
@@ -433,55 +439,11 @@ public class BoardDao {
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
-		
-		}
-
-		return res;
-	}
-
-	*/
-	
-	public List<BoardVo> paging(int curpage, int shownum){
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		PreparedStatement pstmt2 = null;
-		ResultSet result = null;
-		List<BoardVo> list = new ArrayList<BoardVo>();
-
-		try {
-			conn = getConnection();
-
-			String sql = "select no, title, user_no, count, reg_date "+
-					" from board order by no desc limit ?, ?;";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, (curpage - 1)*shownum);
-			pstmt.setInt(2, shownum);
-			result = pstmt.executeQuery();
-
-			while(result.next()) {
-				BoardVo vo = new BoardVo();
-				vo.setNo(result.getLong(1));
-				vo.setTitle(result.getString(2));
-				vo.setUserNo(result.getLong(3));
-				vo.setCnt(result.getLong(4));
-				vo.setRegDate(result.getString(5));
-
-				list.add(vo);
-			}
-
-		} catch (SQLException e) {
-			System.out.println("error-"+e);
-		} finally {
-			try {
-				if(pstmt!=null)	pstmt.close();
-				if(conn!=null) conn.close();
-				if(result!=null) result.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return list;
 	}
+	
+	
 	
 	
 	// 제목으로 검색

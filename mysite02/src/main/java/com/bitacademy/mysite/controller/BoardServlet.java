@@ -97,23 +97,24 @@ public class BoardServlet extends HttpServlet {
 					
 					//내 멋대로 페이징 
 					
-					int nowPage = 1;
-					int pageLimit = 5;
-					int pageNumLimit = 5;
-					/*
+					int nowPage = 1; //지금 페이지 cur
+					int pageLimit = 2; //한 페이지당 리스트 출력 개수
+					int pageNumLimit = 2; //< > 보이게 하는 기준 
+					
+					
 					if(request.getParameter("nowPage")!=null)
 						nowPage = Integer.parseInt(request.getParameter("nowPage"));
 					
 					BoardDao dao = new BoardDao();
-					
-					List<BoardVo> list = new BoardDao().selectAll();
-					
-					int lastPage = (int)Math.ceil(dao.totalCnt()/pageLimit);
+						
+					int lastPage = (int) Math.ceil(dao.totalCnt()/pageLimit);
 					
 					int start = (nowPage-1)*pageLimit+1;
-					int end = nowPage*pageLimit;
+					
+					int end = nowPage*pageLimit ;
 					
 					int startPage = (nowPage-1)/pageNumLimit*pageNumLimit+1;
+					
 					int endPage = startPage+pageNumLimit-1;
 					
 					if(endPage>lastPage)
@@ -124,11 +125,18 @@ public class BoardServlet extends HttpServlet {
 					request.setAttribute("start", start);
 					request.setAttribute("nowPage", nowPage);
 					request.setAttribute("lastPage", lastPage);
-					request.setAttribute("data", dao.list(start, end));
+					request.setAttribute("data", dao.list(start, pageLimit));
 				
-					*/
-					List<BoardVo> list = new BoardDao().selectAll();
-					request.setAttribute("list", list);
+					System.out.println("Start:"+ start);
+					for(int i = start ;i<=end; i++) {
+						System.out.println(dao.list(start, pageLimit));
+					}
+					System.out.println("end:"+ end);
+					System.out.println();
+					
+					//List<BoardVo> list = new BoardDao().selectAll();
+					//request.setAttribute("list", list);
+					
 					WebUtil.forward("/WEB-INF/views/board/index.jsp", request, response);		
 				}
 	}

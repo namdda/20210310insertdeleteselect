@@ -32,38 +32,49 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>
-					<c:set var="count" value="${fn:length(list)}" />
-					<c:forEach items="${list}" var="vo" varStatus="status">
+					<%-- <c:set var="count" value="${fn:length(list)}" />--%>
+					
+					<c:forEach items="${data}" var="vo" varStatus="no">
+						
 						<tr>
-							<td>${count - status.index}</td>
+							<td>${start+no.index }</td>
+							
 							<td>${vo.no}</td>
 
 
 							<%-- <td style="text-align:Left; padding-left:${(vo.depth-1)*40}">  --%>
-							<td style="text-align: Left;"><c:if test="${vo.depth>0}">
+							<td style="text-align: Left;">
+							<c:if test="${vo.depth>0}">
 									<c:forEach begin="1" end="${vo.depth}" step="1">
 									 &nbsp;
 								 </c:forEach>
 									<img
 										src="${pageContext.request.contextPath}/assets/images/reply.png">
-								</c:if> <a
-								href="${pageContext.request.contextPath}/board?a=view&no=${vo.no}">
-									${vo.title} </a></td>
+								</c:if>
+								 <a href="${pageContext.request.contextPath}/board?a=view&no=${vo.no}">
+									${vo.title} </a>
+							</td>
 							<td>${vo.userName }</td>
 							<td>${vo.cnt }</td>
 							<td>${vo.regDate }</td>
 							<td><c:if test="${authUser.no == vo.userNo }">
-									<a
-										href="${pageContext.request.contextPath}/board?a=delete&no=${vo.no}"
+									<a href="${pageContext.request.contextPath}/board?a=delete&no=${vo.no}"
 										class="del">삭제</a>
-								</c:if></td>
+								</c:if>
+							</td>
 						</tr>
 					</c:forEach>
 				</table>
 
+
+
+
+
+
 				<!-- pager 추가 -->
+			
 				<div class="pager">
-					<!-- 
+					
 					<ul>
 					<c:if test="${startPage>1 }">
 						<li><a href="?nowPage=${startPage-1 }"> ◀ </a></li>
@@ -80,7 +91,8 @@
 						<li><a href="?nowPage=${endPage+1 }"> ▶ </a></li>
 					</c:if>
 					</ul>
-				 -->
+				 
+				 <!-- 
 					<ul>
 						<li><a href="">◀</a></li>
 						<li><a href="">1</a></li>
@@ -90,10 +102,18 @@
 						<li>5</li>
 						<li><a href="">▶</a></li>
 					</ul>
-
+					-->
 
 				</div>
 				<!-- pager 추가 -->
+				
+				
+				
+				
+				
+				
+				
+				
 				<c:if test="${not empty authUser}">
 					<div class="bottom">
 						<a href="${pageContext.request.contextPath}/board?a=writeform"
