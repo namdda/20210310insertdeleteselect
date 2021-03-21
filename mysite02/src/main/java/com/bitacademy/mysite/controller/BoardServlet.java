@@ -85,21 +85,66 @@ public class BoardServlet extends HttpServlet {
 					if(result) {
 						WebUtil.redirect(request.getContextPath() + "/board", request, response);							
 						return;
-					}else {
-						// 답글있는 글 삭제 시도 시 
+					}else {					
 						response.setCharacterEncoding("UTF-8"); 
 						response.setContentType("text/html; charset=UTF-8");
 						PrintWriter out = response.getWriter();
 						out.println("<script>alert('답글이 있는 글은 지울 수 없습니다.');location.href='" + request.getContextPath() + "/board';</script>");
 						out.flush();
 					}
-				}else {
+				}
+				
+				
+				
+				
+				
+//				else if ("search".equals(action)) {
+//					String kwd = request.getParameter("kwd"); // jsp 값을 java에서 받기 
+//					int nowPage = 1; //지금 페이지 cur
+//					int pageLimit = 5; //한 페이지당 리스트 출력 개수
+//					int pageNumLimit = 3; //< > 보이게 하는 기준 
+//					
+//					if(kwd != null) {
+//						System.out.println("객체 입력이 잘 되었습니다.");
+//						System.out.println("들어온 값 :"+kwd);
+//					}
+//					
+//					if(request.getParameter("nowPage")!=null)
+//						nowPage = Integer.parseInt(request.getParameter("nowPage"));
+//					
+//					BoardDao dao = new BoardDao();
+//					
+//					int lastPage = (int) Math.ceil(dao.totalCnt()/pageLimit);
+//					int start = (nowPage-1)*pageLimit+1;
+//					//int end = nowPage*pageLimit ;
+//					int startPage = (nowPage-1)/pageNumLimit*pageNumLimit+1;
+//					int endPage = startPage+pageNumLimit-1;
+//					if(endPage>lastPage)
+//						endPage=lastPage;
+//					
+//					request.setAttribute("startPage", startPage);
+//					request.setAttribute("endPage", endPage);
+//					request.setAttribute("start", start);
+//					request.setAttribute("nowPage", nowPage);
+//					request.setAttribute("lastPage", lastPage);
+//					
+//					request.setAttribute("data", dao.search(kwd,start, pageLimit));
+//					
+//					WebUtil.redirect("/WEB-INF/views/board/index.jsp", request, response);		
+//					
+//				}
+				
+				
+				
+				
+				else {
 					
 					//내 멋대로 페이징 
+					String kwd = request.getParameter("kwd");
 					
 					int nowPage = 1; //지금 페이지 cur
-					int pageLimit = 2; //한 페이지당 리스트 출력 개수
-					int pageNumLimit = 2; //< > 보이게 하는 기준 
+					int pageLimit = 5; //한 페이지당 리스트 출력 개수
+					int pageNumLimit = 3; //< > 보이게 하는 기준 
 					
 					
 					if(request.getParameter("nowPage")!=null)
@@ -107,32 +152,37 @@ public class BoardServlet extends HttpServlet {
 					
 					BoardDao dao = new BoardDao();
 						
-					int lastPage = (int) Math.ceil(dao.totalCnt()/pageLimit);
 					
-					int start = (nowPage-1)*pageLimit+1;
 					
-					int end = nowPage*pageLimit ;
 					
-					int startPage = (nowPage-1)/pageNumLimit*pageNumLimit+1;
 					
-					int endPage = startPage+pageNumLimit-1;
-					
-					if(endPage>lastPage)
-						endPage=lastPage;
-					
-					request.setAttribute("startPage", startPage);
-					request.setAttribute("endPage", endPage);
-					request.setAttribute("start", start);
-					request.setAttribute("nowPage", nowPage);
-					request.setAttribute("lastPage", lastPage);
-					request.setAttribute("data", dao.list(start, pageLimit));
-				
-					System.out.println("Start:"+ start);
-					for(int i = start ;i<=end; i++) {
-						System.out.println(dao.list(start, pageLimit));
+					if(kwd == null) {
+						int lastPage = (int) Math.ceil(dao.totalCnt()/pageLimit);
+						int start = (nowPage-1)*pageLimit+1;
+						int end = nowPage*pageLimit ;
+						int startPage = (nowPage-1)/pageNumLimit*pageNumLimit+1;
+						int endPage = startPage+pageNumLimit-1;
+						if(endPage>lastPage)
+							endPage=lastPage;
+						
+						request.setAttribute("startPage", startPage);
+						request.setAttribute("endPage", endPage);
+						request.setAttribute("start", start);
+						request.setAttribute("nowPage", nowPage);
+						request.setAttribute("lastPage", lastPage);
+		
+						request.setAttribute("data", dao.list(start, pageLimit));
+						
+						
+					} else {
+						int startPage = (nowPage-1)/pageNumLimit*pageNumLimit+1;
+						int endPage = startPage+pageNumLimit-1;
+						request.setAttribute("data", dao.search(kwd));
 					}
-					System.out.println("end:"+ end);
-					System.out.println();
+					
+					//request.setAttribute("data", dao.list(start, pageLimit));
+				
+					
 					
 					//List<BoardVo> list = new BoardDao().selectAll();
 					//request.setAttribute("list", list);

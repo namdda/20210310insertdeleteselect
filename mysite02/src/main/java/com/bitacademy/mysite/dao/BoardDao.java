@@ -446,21 +446,25 @@ public class BoardDao {
 	
 	
 	
-	// 제목으로 검색
-	/*
-	public ArrayList<BoardVo> search(String word) {
+	//검색
+	
+	public ArrayList<BoardVo> search(String kwd) {
 		ArrayList<BoardVo> list = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			System.out.println("검색한 단어:" + word);
+			conn = getConnection();
+			
+			System.out.println("검색한 단어:" + kwd);
+			
 			String sql = "select b.no, b.user_no, b.title, b.group_no, b.order_no, b.depth, date_format(b.reg_date,'%Y-%m-%d %H:%i:%s') as regdate, cnt, u.name"
-					+ "from board b" + "join user u " + "on b.user_no = u.no" + "where title like ?"
-					+ "order by group_no DESC, order_no ASC ";
+					+ "	from board b join user u on b.user_no = u.no  where b.title like ? or b.contents like ? " + 
+					"                    order by group_no DESC, order_no ASC ;";
 
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "%" + word + "%");
+			pstmt.setString(1, "%" + kwd + "%");
+			pstmt.setString(2, "%" + kwd + "%");
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -475,6 +479,7 @@ public class BoardDao {
 				vo.setRegDate(rs.getString(7));
 				vo.setCnt(rs.getLong(8));
 				vo.setUserName(rs.getString(9));
+				
 				list.add(vo);
 
 			}
@@ -500,7 +505,7 @@ public class BoardDao {
 
 		return list;
 	}
-	*/
+	
 	
 	public Connection getConnection() throws SQLException {
 		Connection conn = null;
