@@ -51,7 +51,8 @@ CREATE TABLE `emaillist` (
    `email` varchar(200) NOT NULL COMMENT '이메일',
    PRIMARY KEY (`no`)
  ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='이메일리스트'
-
+   
+   
 
 
 
