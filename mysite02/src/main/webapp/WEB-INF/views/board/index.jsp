@@ -12,11 +12,12 @@
 <link
 	href="${pageContext.servletContext.contextPath }/assets/css/board.css"
 	rel="stylesheet" type="text/css">
-	
-<style type="text/css">
-   #tmTable tr:nth-child(even){background-color: #f2f2f2;}
 
-</style>	
+<style type="text/css">
+#tmTable tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+</style>
 </head>
 <body>
 	<div id="container">
@@ -55,7 +56,7 @@
 								 </c:forEach>
 									<img
 										src="${pageContext.request.contextPath}/assets/images/reply.png">
-								</c:if> <a
+								</c:if> <a onclick="setHistroy(this);"
 								href="${pageContext.request.contextPath}/board?a=view&no=${vo.no}">
 									${vo.title} </a></td>
 							<td>${vo.userName }</td>
@@ -111,11 +112,104 @@
 					</div>
 				</c:if>
 			</div>
+
+			<div id="histroy">
+			
+
+				<table id="his" border="1" class="tbl-ex">
+					<tr>
+						<th>번호</th>
+						<th>링크</th>
+					</tr>
+				</table>
+				<button id="clearStorage" onclick="clear_storage();">clear storage</button>
+			</div>
+				
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp">
 			<c:param name="menu" value="board" />
 		</c:import>
+
 		<c:import url="/WEB-INF/views/includes/footer.jsp" />
+
 	</div>
+
+
+	<script>
+		var histroy = JSON.parse(localStorage.getItem("histroy")) || [];
+
+		console.log(histroy);
+		window.onload = function() {
+			getHistroy();
+		}
+
+		function setHistroy(a) {
+			var url = a.href;
+			histroy.push(url);
+			localStorage.setItem("histroy", JSON.stringify(histroy));
+		}
+		
+
+
+		function getHistroy() {
+			var ptable = document.getElementById("his");
+			var cnt = 1;
+		//	var date = new Date();
+			
+			for (var i = 0; i < histroy.length; i++) {
+			
+				var Node = document.createTextNode(histroy[i]);
+							
+				var tr = document.createElement("tr");
+				ptable.appendChild(tr);
+				
+				var notd =document.createElement("td");
+				var number = document.createTextNode(cnt);
+				notd.appendChild(number);
+				tr.appendChild(notd);
+				cnt++;
+				
+				var linktd = document.createElement("td");
+				linktd.appendChild(Node);
+				tr.appendChild(linktd);
+				
+				
+				//var alink = document.createElement("a");
+				//alink.setAttribute('href', "String(Node)");
+				//alink.appendChild(Node);
+				//td.appendChild(alink);
+
+			}
+		}
+		
+		function clear_storage(){
+			
+			 localStorage.clear();
+			 window.location.reload();
+			
+//			 $.ajax({
+//			type : "GET",
+//			url : "mysite02/board",
+//			dataType : "text",
+//			error : function() {
+//		          alert('통신실패!!');
+//		        },
+//		        success : function(data) {
+//		        	 localStorage.clear();
+//		          }
+			 
+//			 });
+		}
+
+		//		if (typeof (Storage) !== "undefined") {
+		// Store
+		//			localStorage.setItem("Url", "test");
+		// Retrieve
+		//			document.getElementById("result").innerHTML = localStorage.getItem("Url");
+		//		} else {
+		//			document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+		//		}
+	</script>
+
 </body>
 </html>

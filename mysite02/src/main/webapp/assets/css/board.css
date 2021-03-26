@@ -27,6 +27,9 @@ input#kwd	{
 	width:250px;
 }
 
+#tmTable tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
 
 .board-form {
 	margin-top:30px
@@ -150,3 +153,7 @@ div.pager  ul li a:visited,
 div.pager  ul li a:link,
 div.pager  ul li a:active	{ text-decoration: none; color:#555 }
 div.pager  ul li a:hover	{ text-decoration: none; color:#f00 }
+
+tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
