@@ -12,6 +12,11 @@
 <link
 	href="${pageContext.servletContext.contextPath }/assets/css/board.css"
 	rel="stylesheet" type="text/css">
+	
+<style type="text/css">
+   #tmTable tr:nth-child(even){background-color: #f2f2f2;}
+
+</style>	
 </head>
 <body>
 	<div id="container">
@@ -20,10 +25,10 @@
 			<div id="board">
 				<form id="search_form"
 					action="${pageContext.request.contextPath }/board" method="post">
-					<input type="text" id="kwd" name="kwd" value="${param.kwd}"> <input
-						type="submit" value="찾기">
+					<input type="text" id="kwd" name="kwd" value="${param.kwd}">
+					<input type="submit" value="찾기">
 				</form>
-				<table class="tbl-ex">
+				<table class="tbl-ex" id="tmTable">
 					<tr>
 						<th>번호</th>
 						<th>글번호</th>
@@ -73,37 +78,31 @@
 				<!-- pager 추가 -->
 
 				<div class="pager">
-	<c:if test="${empty param.kwd}">
-					<ul>
+					<c:if test="${empty param.kwd}">
+						<ul>
 
-					
-						<c:if test="${startPage>1 }">
-							<li><a href="?nowPage=${startPage-1 }"> ◀ </a></li>
-						</c:if>
-						<c:forEach begin="${startPage }" end="${endPage}" step="1" var="i">
-							<c:choose>
-								<c:when test="${nowPage==i }">
-									<li class="selected">${i }</li>
-								</c:when>
-								<c:otherwise>
-									<li><a href="?nowPage=${i }">${i }</a></li>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-						<c:if test="${endPage<lastPage }">
-							<li><a href="?nowPage=${endPage+1 }"> ▶ </a></li>
-						</c:if>
-					</ul>
-	</c:if>
+
+							<c:if test="${startPage>1 }">
+								<li><a href="?nowPage=${startPage-1 }"> ◀ </a></li>
+							</c:if>
+							<c:forEach begin="${startPage }" end="${endPage}" step="1"
+								var="i">
+								<c:choose>
+									<c:when test="${nowPage==i }">
+										<li class="selected">${i }</li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="?nowPage=${i }">${i }</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+							<c:if test="${endPage<lastPage }">
+								<li><a href="?nowPage=${endPage+1 }"> ▶ </a></li>
+							</c:if>
+						</ul>
+					</c:if>
 				</div>
 				<!-- pager 추가 -->
-
-
-
-
-
-
-
 
 				<c:if test="${not empty authUser}">
 					<div class="bottom">

@@ -460,7 +460,7 @@ public class BoardDao {
 			
 			String sql = "select b.no, b.user_no, b.title, b.group_no, b.order_no, b.depth, date_format(b.reg_date,'%Y-%m-%d %H:%i:%s') as regdate, cnt, u.name"
 					+ "	from board b join user u on b.user_no = u.no  where b.title like ? or b.contents like ? " + 
-					"                    order by group_no DESC, order_no ASC ;";
+					"                    order by group_no DESC, order_no ASC;";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%" + kwd + "%");

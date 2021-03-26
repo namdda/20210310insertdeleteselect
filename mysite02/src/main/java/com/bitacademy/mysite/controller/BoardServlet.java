@@ -143,8 +143,7 @@ public class BoardServlet extends HttpServlet {
 					String kwd = request.getParameter("kwd");
 					
 					int nowPage = 1; //지금 페이지 cur
-					int pageLimit = 5; //한 페이지당 리스트 출력 개수
-					int pageNumLimit = 3; //< > 보이게 하는 기준 
+					
 					
 					
 					if(request.getParameter("nowPage")!=null)
@@ -157,6 +156,9 @@ public class BoardServlet extends HttpServlet {
 					
 					
 					if(kwd == null) {
+						int pageLimit = 5; //한 페이지당 리스트 출력 개수
+						int pageNumLimit = 3; //< > 보이게 하는 기준 
+						
 						int lastPage = (int) Math.ceil(dao.totalCnt()/pageLimit);
 						int start = (nowPage-1)*pageLimit+1;
 						int end = nowPage*pageLimit ;
@@ -175,8 +177,7 @@ public class BoardServlet extends HttpServlet {
 						
 						
 					} else {
-						int startPage = (nowPage-1)/pageNumLimit*pageNumLimit+1;
-						int endPage = startPage+pageNumLimit-1;
+					
 						request.setAttribute("data", dao.search(kwd));
 					}
 					
