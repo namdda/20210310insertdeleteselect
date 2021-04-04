@@ -56,7 +56,7 @@
 								 </c:forEach>
 									<img
 										src="${pageContext.request.contextPath}/assets/images/reply.png">
-								</c:if> <a onclick="setHistroy(this);"
+								</c:if> <a onclick="setHistroy(this);getDate()"
 								href="${pageContext.request.contextPath}/board?a=view&no=${vo.no}">
 									${vo.title} </a></td>
 							<td>${vo.userName }</td>
@@ -137,8 +137,9 @@
 
 	<script>
 		var histroy = JSON.parse(localStorage.getItem("histroy")) || [];
-
-		console.log(histroy);
+		var date;
+		
+		//console.log(histroy);
 		window.onload = function() {
 			getHistroy();
 		}
@@ -149,15 +150,17 @@
 			localStorage.setItem("histroy", JSON.stringify(histroy));
 		}
 		
-
+		
+		
 
 		function getHistroy() {
 			var ptable = document.getElementById("his");
 			var cnt = 1;
-		//	var date = new Date();
 			
 			for (var i = 0; i < histroy.length; i++) {
 			
+				
+				
 				var Node = document.createTextNode(histroy[i]);
 							
 				var tr = document.createElement("tr");
@@ -173,11 +176,6 @@
 				linktd.appendChild(Node);
 				tr.appendChild(linktd);
 				
-				
-				//var alink = document.createElement("a");
-				//alink.setAttribute('href', "String(Node)");
-				//alink.appendChild(Node);
-				//td.appendChild(alink);
 
 			}
 		}
@@ -186,29 +184,9 @@
 			
 			 localStorage.clear();
 			 window.location.reload();
-			
-//			 $.ajax({
-//			type : "GET",
-//			url : "mysite02/board",
-//			dataType : "text",
-//			error : function() {
-//		          alert('통신실패!!');
-//		        },
-//		        success : function(data) {
-//		        	 localStorage.clear();
-//		          }
-			 
-//			 });
+
 		}
 
-		//		if (typeof (Storage) !== "undefined") {
-		// Store
-		//			localStorage.setItem("Url", "test");
-		// Retrieve
-		//			document.getElementById("result").innerHTML = localStorage.getItem("Url");
-		//		} else {
-		//			document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-		//		}
 	</script>
 
 </body>

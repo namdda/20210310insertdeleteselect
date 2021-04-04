@@ -185,7 +185,7 @@ public class UserDao {
 
 			// 2. 연결하기
 			String url = "jdbc:mysql://localhost:3306/webdb?characterEncoding=utf8&serverTimezone=UTC";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
+			conn = DriverManager.getConnection(url, "root", "masterpw");
 
 		} catch (ClassNotFoundException e) {
 			System.out.println("error-" + e);

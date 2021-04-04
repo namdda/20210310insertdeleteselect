@@ -512,7 +512,7 @@ public class BoardDao {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			String url = "jdbc:mysql://localhost:3306/webdb?characterEncoding=utf8&serverTimezone=UTC";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
+			conn = DriverManager.getConnection(url, "root", "masterpw");
 		} catch (ClassNotFoundException e) {
 			System.out.println("error " + e);
 		}

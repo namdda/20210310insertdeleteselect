@@ -1,15 +1,17 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.bitacademy</groupId>
-    <artifactId>servlet-practices</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>mysite02</artifactId>
-  <packaging>war</packaging>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.bitacademy</groupId>
+		<artifactId>servlet-practices</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>mysite02</artifactId>
+	<packaging>war</packaging>
 
 
-<dependencies>
+	<dependencies>
 		<!--Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -17,27 +19,45 @@
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
 			<version>2.0</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
-		    <version>8.0.21</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.21</version>
 		</dependency>
+
+
+
+
+
+
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180813</version>
+		</dependency>
+
 	</dependencies>
-	
+
 	<build>
 		<finalName>mysite02</finalName>
 		<resources>
@@ -66,5 +86,5 @@
 				</configuration>
 			</plugin>
 		</plugins>
-	</build>	
+	</build>
 </project>
