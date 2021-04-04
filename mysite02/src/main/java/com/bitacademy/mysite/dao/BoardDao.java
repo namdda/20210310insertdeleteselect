@@ -507,12 +507,24 @@ public class BoardDao {
 	}
 	
 	
+//	public Connection getConnection() throws SQLException {
+//		Connection conn = null;
+//		try {
+//			Class.forName("com.mysql.cj.jdbc.Driver");
+//			String url = "jdbc:mysql://localhost:3306/webdb?characterEncoding=utf8&serverTimezone=UTC";
+//			conn = DriverManager.getConnection(url, "root", "masterpw");
+//		} catch (ClassNotFoundException e) {
+//			System.out.println("error " + e);
+//		}
+//		return conn;
+//	}
+	
 	public Connection getConnection() throws SQLException {
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			String url = "jdbc:mysql://localhost:3306/webdb?characterEncoding=utf8&serverTimezone=UTC";
-			conn = DriverManager.getConnection(url, "root", "masterpw");
+			conn = DriverManager.getConnection(url, "webdb", "webdb");
 		} catch (ClassNotFoundException e) {
 			System.out.println("error " + e);
 		}

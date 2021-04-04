@@ -14,6 +14,24 @@ import com.bitacademy.mysite.vo.GuestbookVo;
 
 public class GuestbookDao {
 	
+//	private Connection getConnection() throws SQLException {
+//		Connection conn = null;
+//		
+//		try {
+//			//1. JDBC Driver 로딩
+//			Class.forName("com.mysql.cj.jdbc.Driver");
+//		
+//			//2. 연결하기
+//			String url = "jdbc:mysql://localhost:3306/webdb?characterEncoding=utf8&serverTimezone=UTC";
+//			conn = DriverManager.getConnection(url, "root", "masterpw");
+//
+//		} catch (ClassNotFoundException e) {
+//			System.out.println("error-" + e);
+//		}
+//
+//		return conn;
+//	}
+	
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 		
@@ -23,7 +41,7 @@ public class GuestbookDao {
 		
 			//2. 연결하기
 			String url = "jdbc:mysql://localhost:3306/webdb?characterEncoding=utf8&serverTimezone=UTC";
-			conn = DriverManager.getConnection(url, "root", "masterpw");
+			conn = DriverManager.getConnection(url, "webdb", "webdb");
 
 		} catch (ClassNotFoundException e) {
 			System.out.println("error-" + e);
