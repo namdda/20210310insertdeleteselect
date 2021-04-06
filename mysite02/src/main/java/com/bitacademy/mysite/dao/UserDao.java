@@ -146,14 +146,13 @@ public class UserDao {
 		PreparedStatement pstmt = null;
 		try {
 			conn = getConnection();
-			String sql = "update user " + "	set name = ?, email = ?, password = ?, gender = ? " + "	where no = ?;";
+			String sql = "update user " + "	set name = ?, password = ?, gender = ? " + "	where no = ?;";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getName());
-			pstmt.setString(2, vo.getEmail());
-			pstmt.setString(3, vo.getPassword());
-			pstmt.setString(4, vo.getGender());
-			pstmt.setLong(5, vo.getNo());
+			pstmt.setString(2, vo.getPassword());
+			pstmt.setString(3, vo.getGender());
+			pstmt.setLong(4, vo.getNo());
 
 			// 결과가 1이 아닌경우 false return
 			result = 1 == pstmt.executeUpdate();
