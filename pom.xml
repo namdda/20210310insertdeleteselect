@@ -40,5 +40,10 @@
 		<module>jstlel</module>
 		<module>jspfileupload</module>
 		<module>fileupload</module>
+		<module>packagepractice</module>
+		<module>mongodbsite</module>
+		<module>mongodbite</module>
+		<module>reflectionpractice</module>
+		<module>RMIpractice</module>
 	</modules>
 </project>

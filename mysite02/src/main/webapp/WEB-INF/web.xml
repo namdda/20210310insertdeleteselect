@@ -60,4 +60,14 @@
     <servlet-name>BoardServlet</servlet-name>
     <url-pattern>/board</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MBoardServlet</display-name>
+    <servlet-name>MBoardServlet</servlet-name>
+    <servlet-class>com.bitacademy.mysite.controller.MBoardServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MBoardServlet</servlet-name>
+    <url-pattern>/Mboard</url-pattern>
+  </servlet-mapping>
 </web-app>
